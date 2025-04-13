@@ -1,0 +1,78 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@definitions/*": [
+        "src/definitions/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@components/icons/*": [
+        "src/components/icons/*"
+      ],
+      "@apis/*": [
+        "src/apis/*"
+      ],
+      "@stores/*": [
+        "src/stores/*"
+      ],
+      "@@types/*": [
+        "src/types/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@containers/*": [
+        "src/containers/*"
+      ],
+      "@validation/*": [
+        "src/validation/*"
+      ],
+      "@mock/*": [
+        "src/mock/*"
+      ],
+      "@contexts/*": [
+        "src/contexts/*"
+      ],
+    },
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

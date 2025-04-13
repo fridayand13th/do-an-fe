@@ -1,0 +1,100 @@
+.paginationContainer {
+  display: flex;
+  margin: 0.5rem 0;
+  .paginationWrapper {
+    display: flex;
+    margin-left: auto;
+    background-color: $white;
+    padding: 0.475rem 1rem;
+    box-shadow: $box-shadow-sm;
+    border-radius: 0.5rem;
+    .paginationControlWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .paginationIconWrapper {
+        display: flex;
+        height: 1.3rem;
+        width: 1.3rem;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        transition: all 0.3s ease-in-out;
+        margin: 0 0.25rem;
+        &:hover {
+          background: $zinc-300;
+          border-radius: 0.25rem;
+        }
+      }
+    }
+    .paginationNumberContainer {
+      display: flex;
+      .paginationNumber {
+        min-width: 1.3rem;
+        height: 1.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+        margin: 0 0.25rem;
+        &.select {
+          background: $primary-400;
+          color: $white;
+          border-radius: 0.25rem;
+        }
+
+        &:hover {
+          background: $primary-400;
+          color: white;
+          border-radius: 0.25rem;
+        }
+      }
+    }
+  }
+}
+
+.paginationTakeButton {
+  position: relative;
+  border-radius: 0.375rem;
+  padding: 0.25rem 1.25rem 0.25rem 0.5rem;
+  font-size: 0.775rem;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  &:hover {
+    // background: rgba($zinc-400, 0.8);
+    // color: $white;
+    background: none;
+
+    &::before {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid #000;
+      animation: fade 0.3s ease-in-out;
+    }
+  }
+
+  &Icon {
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    transform: translateY(-50%);
+  }
+}
+.paginationTakeItem {
+  font-size: 0.775rem;
+  white-space: nowrap;
+}
+
+@keyframes fade {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

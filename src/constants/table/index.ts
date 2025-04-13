@@ -1,0 +1,1 @@
+export const TABLE_ROW: number = 15

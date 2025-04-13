@@ -1,0 +1,38 @@
+.listWrapper {
+  background: $white;
+  box-shadow: $box-shadow-sm;
+  border-radius: 0.25rem;
+  .listHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    .listTitle {
+      font-weight: bold;
+      font-size: 1.125rem;
+    }
+  }
+
+  .listContent {
+    padding: 0.5rem 1.25rem;
+    overflow: auto;
+    max-height: 16.5rem;
+    .listLayer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      &:nth-child(odd) {
+        background: rgba($again-300, 0.1);
+      }
+      .trashIcon {
+        color: $danger-300;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.totalProductCount {
+  font-size: 1.25rem;
+  font-weight: bold;
+}

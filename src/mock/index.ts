@@ -1,0 +1,178 @@
+export const MOCK_TERMS_AND_CONDITIONS = [
+  {
+    id: 1,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Giới thiệu",
+    content:
+      "Chào mừng bạn đến với dịch vụ của chúng tôi. Bằng việc truy cập hoặc sử dụng dịch vụ, bạn đồng ý với các điều khoản này. Vui lòng đọc kỹ điều khoản trước khi sử dụng dịch vụ. Nếu không đồng ý với bất kỳ điều khoản nào, bạn không nên sử dụng dịch vụ.",
+    type: "term",
+    order: 1,
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Điều kiện thanh toán",
+    content:
+      "Tất cả khoản thanh toán phải được thực hiện theo chu kỳ thanh toán quy định. Nếu không thanh toán, chúng tôi có quyền đình chỉ hoặc chấm dứt quyền truy cập vào dịch vụ.",
+    type: "condition",
+    order: 1,
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Trách nhiệm người dùng",
+    content:
+      "Người dùng phải tuân thủ tất cả luật và quy định có liên quan khi sử dụng dịch vụ. Điều này bao gồm việc tôn trọng quyền sở hữu trí tuệ và không thực hiện hành vi gian lận hoặc lừa đảo.",
+    type: "term",
+    order: 2,
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Giới hạn trách nhiệm",
+    content:
+      "Chúng tôi không chịu trách nhiệm đối với các thiệt hại gián tiếp, ngẫu nhiên hoặc hậu quả phát sinh từ việc sử dụng hoặc không thể sử dụng dịch vụ. Trách nhiệm của chúng tôi được giới hạn trong phạm vi tối đa mà pháp luật cho phép.",
+    type: "condition",
+    order: 2,
+    deletedAt: null,
+  },
+  {
+    id: 5,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Chính sách hủy bỏ",
+    content:
+      "Người dùng có thể hủy đăng ký bất cứ lúc nào sau khi thông báo trước. Tuy nhiên, các khoản tiền đã thanh toán sẽ không được hoàn lại. Vui lòng tham khảo quy trình hủy bỏ của chúng tôi để biết thêm chi tiết.",
+    type: "condition",
+    order: 3,
+    deletedAt: null,
+  },
+  {
+    id: 6,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Chấm dứt hợp đồng",
+    content:
+      "Chúng tôi có quyền chấm dứt hoặc đình chỉ tài khoản của bạn mà không cần thông báo trước nếu bạn vi phạm điều khoản này hoặc có hành vi gây tổn hại đến người dùng khác hoặc dịch vụ.",
+    type: "term",
+    order: 3,
+    deletedAt: null,
+  },
+  {
+    id: 7,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Chính sách bảo mật",
+    content:
+      "Thông tin cá nhân của bạn rất quan trọng đối với chúng tôi. Chúng tôi sẽ thu thập và sử dụng dữ liệu cá nhân của bạn theo Chính sách Bảo mật. Vui lòng xem lại chính sách để hiểu rõ cách chúng tôi xử lý dữ liệu của bạn.",
+    type: "term",
+    order: 4,
+    deletedAt: null,
+  },
+  {
+    id: 8,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Luật điều chỉnh",
+    content:
+      "Các điều khoản này được điều chỉnh và giải thích theo pháp luật của khu vực pháp lý nơi chúng tôi hoạt động. Mọi tranh chấp sẽ được giải quyết tại tòa án có thẩm quyền trong khu vực đó.",
+    type: "condition",
+    order: 4,
+    deletedAt: null,
+  },
+  {
+    id: 9,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Sửa đổi",
+    content:
+      "Chúng tôi có thể thay đổi các điều khoản này bất kỳ lúc nào và sẽ thông báo cho bạn nếu có thay đổi quan trọng. Việc tiếp tục sử dụng dịch vụ sau khi điều khoản được sửa đổi đồng nghĩa với việc bạn đồng ý với các thay đổi đó.",
+    type: "term",
+    order: 5,
+    deletedAt: null,
+  },
+  {
+    id: 10,
+    createdAt: "2024-10-31T02:50:42.680Z",
+    updatedAt: "2024-10-31T02:50:42.680Z",
+    section: "Phản hồi của người dùng",
+    content:
+      "Chúng tôi hoan nghênh mọi phản hồi và đề xuất từ bạn về dịch vụ. Bằng việc gửi phản hồi, bạn đồng ý rằng chúng tôi có thể sử dụng chúng mà không cần bồi thường.",
+    type: "condition",
+    order: 5,
+    deletedAt: null,
+  },
+  {
+    id: 11,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Quyền sở hữu trí tuệ",
+    content:
+      "Tất cả nội dung, thương hiệu và quyền sở hữu trí tuệ trên dịch vụ thuộc về chúng tôi hoặc bên cấp phép. Bạn không được sao chép, chỉnh sửa, phân phối hoặc công bố bất kỳ nội dung nào nếu không có sự đồng ý bằng văn bản từ chúng tôi.",
+    type: "term",
+    order: 6,
+    deletedAt: null,
+  },
+  {
+    id: 12,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Dịch vụ bên thứ ba",
+    content:
+      "Dịch vụ của chúng tôi có thể chứa liên kết đến trang web hoặc dịch vụ của bên thứ ba mà chúng tôi không sở hữu hoặc kiểm soát. Chúng tôi không chịu trách nhiệm về nội dung, chính sách bảo mật hoặc hành vi của các bên thứ ba này.",
+    type: "condition",
+    order: 6,
+    deletedAt: null,
+  },
+  {
+    id: 13,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Nội dung người dùng",
+    content:
+      "Bạn giữ quyền sở hữu đối với nội dung bạn gửi lên dịch vụ. Tuy nhiên, bằng việc gửi nội dung, bạn cấp cho chúng tôi quyền sử dụng, sao chép, chỉnh sửa và phân phối nội dung đó trên toàn cầu mà không phải trả phí.",
+    type: "term",
+    order: 7,
+    deletedAt: null,
+  },
+  {
+    id: 14,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Bảo mật tài khoản",
+    content:
+      "Bạn có trách nhiệm bảo mật thông tin tài khoản và chịu trách nhiệm với mọi hoạt động diễn ra trong tài khoản của bạn. Nếu có sử dụng trái phép, bạn phải thông báo ngay cho chúng tôi.",
+    type: "condition",
+    order: 7,
+    deletedAt: null,
+  },
+  {
+    id: 15,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Miễn trừ bảo đảm",
+    content:
+      "Dịch vụ được cung cấp 'nguyên trạng' và 'khi có thể'. Chúng tôi không đảm bảo độ tin cậy, chính xác hoặc đầy đủ của dịch vụ. Việc sử dụng dịch vụ là hoàn toàn do bạn tự chịu trách nhiệm.",
+    type: "term",
+    order: 8,
+    deletedAt: null,
+  },
+  {
+    id: 16,
+    createdAt: "2024-11-01T02:50:42.680Z",
+    updatedAt: "2024-11-01T02:50:42.680Z",
+    section: "Thông tin liên hệ",
+    content:
+      "Nếu bạn có bất kỳ câu hỏi nào liên quan đến dịch vụ, vui lòng liên hệ với chúng tôi. Thông tin liên hệ có sẵn trong mục 'Liên hệ' trên trang web của chúng tôi.",
+    type: "condition",
+    order: 8,
+    deletedAt: null,
+  },
+];

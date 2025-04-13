@@ -1,0 +1,1 @@
+export const DEFAULT_FAQ_SKELETON = 6

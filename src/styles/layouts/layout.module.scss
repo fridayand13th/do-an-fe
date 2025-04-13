@@ -1,0 +1,48 @@
+.mainContainer {
+  min-height: calc(100vh - 4rem);
+  // height: calc(100vh - 3rem);
+  padding: 2rem 30px;
+  margin-left: $pc-nav-width;
+  // min-width: $pc;
+
+  .pageNavigator {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: flex-end;
+    p {
+      padding-right: 2px;
+
+      &:last-child {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.mobileMainContainer {
+  margin-left: 0;
+}
+
+.noScroll {
+  overflow: hidden;  
+  height: calc(100vh - 4rem);   
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);  
+  z-index: 1; 
+}
+
+
+
+
+
+
+
+
+
+

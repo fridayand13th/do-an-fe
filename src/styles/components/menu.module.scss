@@ -1,0 +1,43 @@
+.maxiMenu {
+  display: flex;
+  min-height: 34px;
+
+  &Item {
+    margin-right: 24px;
+    font-size: 1em;
+    opacity: 0.7;
+    cursor: pointer;
+    font-weight: 600;
+    &.selected {
+      position: relative;
+      opacity: 1;
+      &::before {
+        content: '';
+        animation: width 0.3s ease;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $success-500;
+      }
+    }
+  }
+
+  &Content {
+    padding: 24px 0;
+  }
+
+  &Footer {
+    padding: 24px 0;
+  }
+}
+
+@keyframes width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

@@ -1,0 +1,96 @@
+.collectModal {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+.collectModalBody {
+  min-height: 28.5rem;
+  margin-bottom: 72px;
+  overflow: scroll;
+  input {
+    animation: categoryAnimation 0.3s ease-in-out;
+  }
+  .collectMarketListContainer {
+    p {
+      margin-bottom: 0.5rem;
+    }
+    .collectMarketListWrapper {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 1rem;
+      margin: auto;
+      min-width: 330px;
+
+      .collectMarket {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0.4;
+        gap: 0.5rem;
+        cursor: pointer;
+        width: 10rem;
+        transition: opacity 0.3s ease-in-out;
+        span {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  .categoryListContainer {
+    .categoryWrapper {
+      display: flex;
+      max-height: 20rem;
+      min-width: 24.5rem;
+      justify-content: first baseline;
+      overflow: auto;
+      h4 {
+        padding: 0.25rem 0;
+        font-size: 1.125rem;
+        font-weight: bold;
+      }
+      .firstCategoryWrapper {
+        flex-basis: 50%;
+      }
+      .secondCategoryWrapper {
+        flex-basis: 50%;
+      }
+      .category {
+        animation: categoryAnimation 0.6s ease-in-out;
+        padding: 0.25rem;
+        cursor: pointer;
+        opacity: 0.4;
+        transition: all 0.3s ease-in-out;
+        &Select {
+          opacity: 1;
+        }
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+.felx1 {
+  flex: 1;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  width: 100%;
+}
+
+@keyframes categoryAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,48 @@
+.background {
+  padding-top: 1.25rem;
+  .wrap {
+    display: block;
+    min-width: 280px;
+    border: none;
+    padding: none;
+    width: 100%;
+    padding: 2.2rem 1rem;
+    h1,
+    h2 {
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      padding-bottom: 1.25rem;
+      font-weight: 600;
+    }
+    h2 {
+      margin-bottom: 3rem;
+      font-weight: 500;
+    }
+  }
+}
+
+@media screen and (min-width: $tablet) {
+  .background {
+    width: 100vw;
+    height: 100vh;
+    background-color: $primary-50;
+    .wrap {
+      border: 0.25rem solid #a0c2be;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 1.5rem;
+      box-sizing: border-box;
+      background-color: #fff;
+      width: 40rem;
+      padding: 5rem 7.5rem;
+    }
+  }
+}
+
+.background2 {
+  background-image: linear-gradient(180deg, rgb(250, 207, 221), rgb(255, 255, 255))
+}

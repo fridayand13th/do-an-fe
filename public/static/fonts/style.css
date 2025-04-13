@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('./NotoSansKR-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR Number';
+  src: url('./NotoSansKR-Regular.woff') format('woff');
+  unicode-range: U+0030-0039;
+}
+
+@font-face {
+  font-family: 'Roboto Regular';
+  src: url('./Roboto-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'montserrat';
+  src: url('./Montserrat-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'nanumsquare';
+  src: url('./NanumSquareNeoOTF-Bd.woff') format('woff');
+  src: url('./NanumSquareNeoOTF-Eb.woff') format('woff');
+  src: url('./NanumSquareNeoOTF-Hv.woff') format('woff');
+  src: url('./NanumSquareNeoOTF-Lt.woff') format('woff');
+  src: url('./NanumSquareNeoOTF-Rg.woff') format('woff');
+}

@@ -1,0 +1,32 @@
+.summaryContainer {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  .summaryContent {
+    width: 100%;
+  }
+
+  .summaryArrow {
+    width: 3rem;
+  }
+}
+
+.defaultSummary {
+  &:hover {
+    background: rgba($zinc-200, 0.2);
+  }
+}
+
+.arrowWrapper {
+  padding: 0 0.5rem;
+  width: 3rem;
+  .arrow {
+    transition: transform 0.3s;
+    width: 2rem;
+    height: 2rem;
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+}

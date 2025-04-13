@@ -1,0 +1,85 @@
+.gridTable {
+  .gridContainer {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    padding: 3px 0;
+    border-bottom: $thin-border;
+
+    &:first-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: $list-hover-bg-color;
+    }
+
+    .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      z-index: 1;
+      width: 1.5rem;
+    }
+  }
+
+  .active {
+    background-color: $list-active-bg-color;
+  }
+
+  .gridHeader {
+    font-weight: bold;
+    font-size: 0.875rem;
+    grid-template-rows: min-content;
+    background: $secondary-600;
+    color: $white;
+    margin-bottom: 4px;
+  }
+
+  .gridItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    width: 100%;
+    animation: opacity 0.4s ease-in-out;
+  }
+}
+
+.gridCard {
+  gap: 12px;
+
+  .gridContainer {
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(125, 125, 125, 0.2);
+    border-radius: 12px;
+
+    &:hover {
+      box-shadow: 0 0 6px rgba(125, 125, 125, 0.6);
+    }
+  }
+}
+
+.gridCheckboxContainer {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+
+  .gridCheckboxWrapper {
+    position: relative;
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

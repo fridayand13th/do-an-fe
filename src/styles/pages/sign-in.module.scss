@@ -1,0 +1,49 @@
+.signInContainer {
+  padding-top: 1.25rem;
+
+  h1,
+  h2 {
+    text-align: center;
+  }
+  h1 {
+    font-size: 2rem;
+    padding-bottom: 1.25rem;
+    font-weight: 600;
+  }
+  h2 {
+    margin-bottom: 3rem;
+    font-weight: 500;
+  }
+
+  .signInActionContainer {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    font-size: 0.775rem;
+    letter-spacing: -1px;
+  }
+}
+
+.signInErrorContainer {
+  position: absolute;
+  bottom: 44px;
+  left: 0;
+  font-size: 0.775rem;
+  color: #ff0000;
+}
+
+.kakaoBtn {
+  background-color: #ffeb00 !important;
+  color: #000;
+  &:hover {
+    background-color: #f8e301 !important;
+  }
+
+  &:active {
+    background-color: #ffed66 !important;
+  }
+}
+
+.authCheck {
+  background-color: #4444 !important;
+}

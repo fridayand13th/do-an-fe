@@ -1,0 +1,145 @@
+.headerContainer {
+  position: sticky;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: $header-height;
+  // margin-left: $pc-nav-width;
+  z-index: 13;
+  background-color: $white;
+  color: #fff;
+  box-shadow: 0px 1px 3px -2px gray;
+  .headerWrap {
+    // min-width: $pc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: 0 30px;
+
+    .navToggleButton {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      background-color: transparent;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: black;
+      transform: translateY(-50%);
+      &:hover {
+        background: transparent;
+      }
+      &:active {
+        background: transparent;
+      }
+      &:focus {
+        background: transparent;
+      }
+    }
+    .headerAvatar {
+      margin-left: auto;
+      cursor: pointer;
+      position: relative;
+    }
+    .controlContainer {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      width: 312px;
+      background-color: #fff;
+      --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+        0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+      --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
+        0 2px 4px -2px var(--tw-shadow-color) !important;
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+        var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+      padding: 1rem 0.75rem;
+      border-radius: 0.375rem;
+      color: $zinc-900;
+      z-index: 999;
+      max-height: calc(100vh - 100px);
+      overflow: auto;
+
+      .headerInfoMenuItem {
+        cursor: pointer;
+        padding: 6px;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        justify-content: flex-start;
+        &:hover {
+          background: $secondary-100;
+        }
+      }
+
+      .subscribedServiceName {
+        font-size: 1.125rem;
+        font-weight: 600;
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    
+  }
+}
+
+.navMobileContainer {
+  position: fixed;
+  top: $header-height;
+  right: 0;
+  width: 0;
+  background: $secondary-800;
+  height: 100vh;
+  // border-top: 2px solid rgba(125, 125, 125, 0.6);
+  opacity: 0;
+  &Open {
+    transition: all 0.3s ease-in-out;
+
+    display: block;
+    width: 100vw;
+    opacity: 1;
+  }
+
+  .navMobileWrapper {
+    padding: 3.25rem 2.5rem;
+    ul {
+      li {
+        padding: 1.25rem 0;
+      }
+    }
+  }
+}
+
+@keyframes slide {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes slide-bottom {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 12rem;
+  }
+}
+
+// @media screen and (max-width: 1150px) {
+//   .headerNavLink {
+//     width: 7rem !important;
+//   }
+//   .headerChildrenNav {
+//     div {
+//       ul {
+//         width: 7rem !important;
+//       }
+//     }
+//   }
+// }
