@@ -1,5 +1,5 @@
-import { ListAccordionProps } from '@@types/components/commons/lists';
-import { TListOptions, TListRenderItem } from '@@types/containers/list';
+import { ListAccordionProps } from "@@types/components/commons/lists";
+import { TListOptions, TListRenderItem } from "@@types/containers/list";
 import {
   Checkbox,
   Table,
@@ -9,27 +9,23 @@ import {
   Th,
   Thead,
   Tr,
-} from '@chakra-ui/react';
-import InputField from '@components/common/forms/input-field';
-import { useListCheck, useListInsert } from '@components/common/lists/hooks';
+} from "@chakra-ui/react";
+import InputField from "@components/common/forms/input-field";
+import { useListCheck, useListInsert } from "@components/common/lists/hooks";
 import React, {
   useEffect,
   useMemo,
   useRef,
   useState,
   cloneElement,
-} from 'react';
-import { useForm } from 'react-hook-form';
-import { FaAngleDown } from 'react-icons/fa';
+} from "react";
+import { useForm } from "react-hook-form";
+import { FaAngleDown } from "react-icons/fa";
 
 export default function ListAccordion<
-  ItemType extends { id: ItemType['id'] } & Record<string, any>,
+  ItemType extends { id: ItemType["id"] } & Record<string, any>,
   ItemHeaders extends string,
->({
-  items,
-  renderItem,
-  options,
-}: ListAccordionProps<ItemType, ItemHeaders>) {
+>({ items, renderItem, options }: ListAccordionProps<ItemType, ItemHeaders>) {
   const tableContainerRef = useRef<HTMLTableElement>(null);
   //const headers = useMemo(() => renderItem.map((_item) => _item.key), []);
   const headers = renderItem.map((_item) => _item.key);
@@ -50,7 +46,7 @@ export default function ListAccordion<
     const width = render.width && render.width;
 
     return (
-      <Th key={header} w={width ?? 'auto'}>
+      <Th key={header} w={width ?? "auto"}>
         {header}
       </Th>
     );
@@ -127,7 +123,7 @@ export default function ListAccordion<
 }
 
 function AccordionRow<
-  ItemType extends { id: ItemType['id'] } & Record<string, any>,
+  ItemType extends { id: ItemType["id"] } & Record<string, any>,
   ItemHeaders extends string,
 >({
   headers,
@@ -159,7 +155,7 @@ function AccordionRow<
     register,
     formState: { errors },
   } = useForm({
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues: options?.edit?.defaultValues.reduce((prev, key) => {
       prev[key] = item[key];
       return prev;
@@ -170,11 +166,11 @@ function AccordionRow<
     if (!options) return;
     const _controls = options.controls?.reduce((prev, control, index) => {
       let Component: React.ReactNode =
-        typeof control === 'function' ? control(item) : control;
+        typeof control === "function" ? control(item) : control;
 
       if (
         !!options?.edit &&
-        (Component as React.ReactElement)?.props?.role === 'edit'
+        (Component as React.ReactElement)?.props?.role === "edit"
       ) {
         Component = React.cloneElement(Component as React.ReactElement, {
           onClick: handleSubmit(options.edit?.onSubmitValid!),
@@ -203,11 +199,11 @@ function AccordionRow<
     return (
       <Td
         key={`${header} - ${item.id}`}
-        w={render.width ?? 'auto'}
+        w={render.width ?? "auto"}
         {...render.cellStyle}
       >
         {isEdit ? (
-          typeof isEdit.Component === 'function' ? (
+          typeof isEdit.Component === "function" ? (
             isEdit.Component(register, errors)
           ) : (
             <InputField
@@ -215,18 +211,18 @@ function AccordionRow<
               hideLabel
               errors={errors}
               errorMessage={
-                '' +
+                "" +
                 (isEdit.options?.max ||
                   isEdit.options?.min ||
                   isEdit.options?.maxLength ||
                   isEdit.options?.minLength ||
-                  '')
+                  "")
               }
             >
               {cloneElement(isEdit.Component, {
-                border: '1px solid rgba(125, 125, 125, 0)',
+                border: "1px solid rgba(125, 125, 125, 0)",
                 _hover: {
-                  border: '1px solid rgba(125, 125, 125, 0.2)',
+                  border: "1px solid rgba(125, 125, 125, 0.2)",
                 },
                 ...register(isEdit.key, isEdit.options || {}),
               })}
@@ -235,26 +231,20 @@ function AccordionRow<
         ) : render.render ? (
           render?.render(item)
         ) : (
-          item[header] || ''
+          item[header] || ""
         )}
       </Td>
     );
   };
 
   const renderChildren = (item: ItemType, isExpanded: boolean) => {
-    // const isCustom = options?.customRenderChild?.find(
-    //   (custom) => custom.key === item.id,
-    // );
-
-    // if (isCustom) return isCustom.render(item, index);
-
-    return options?.renderChild ? options?.renderChild(item, isExpanded) : '';
+    return options?.renderChild ? options?.renderChild(item, isExpanded) : "";
   };
 
   const renderControls = (item: ItemType) => {
     const _controls = options!.controls!.reduce((prev, control, index) => {
       const Component: React.ReactNode =
-        typeof control === 'function' ? control(item) : control;
+        typeof control === "function" ? control(item) : control;
 
       prev.push(Component);
 
@@ -271,17 +261,17 @@ function AccordionRow<
     if (options?.edit) {
       if (!controls)
         throw new Error(
-          'The Edit property requires a controls property with at least one role edit.',
+          "The Edit property requires a controls property with at least one role edit.",
         );
 
       const isEditButton = controls.some(
         (control) =>
-          (control as React.ReactElement).props.children.props.role === 'edit',
+          (control as React.ReactElement).props.children.props.role === "edit",
       );
 
       if (!isEditButton)
         throw new Error(
-          'The Edit property requires a controls property with at least one role edit.',
+          "The Edit property requires a controls property with at least one role edit.",
         );
     }
   }, []);
@@ -300,7 +290,7 @@ function AccordionRow<
     <>
       <Tr
         _hover={{
-          bg: options?.lineHoverColor ?? 'rgba(248, 243, 200, 0.4)',
+          bg: options?.lineHoverColor ?? "rgba(248, 243, 200, 0.4)",
         }}
         className="transition-all duration-300"
       >
@@ -310,14 +300,14 @@ function AccordionRow<
               options?.renderCondition(item) && (
                 <FaAngleDown
                   className={`transition-all duration-300 ${
-                    toggle ? 'rotate-180' : ''
+                    toggle ? "rotate-180" : ""
                   }`}
                 />
               )
             ) : (
               <FaAngleDown
                 className={`transition-all duration-300 ${
-                  toggle ? 'rotate-180' : ''
+                  toggle ? "rotate-180" : ""
                 }`}
               />
             )}

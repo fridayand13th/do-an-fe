@@ -2,6 +2,7 @@ import { TResponseType } from "@@types/forms/common-type";
 import axiosInstance from "@apis/instance";
 import { AxiosRequestConfig } from "axios";
 import moment from "moment";
+import { TaskStatus } from "src/pages/dashboard";
 
 export const setComma = (value: string | number): string => {
   if (!value || value === "0") return "0";
@@ -156,4 +157,19 @@ export function decodeJwt(token: string) {
       .join(""),
   );
   return JSON.parse(jsonPayload);
+}
+
+export function getStatusBackgroundColor(status: TaskStatus) {
+  switch (status) {
+    case TaskStatus.OPEN:
+      return "red.100";
+    case TaskStatus.IN_PROGRESS:
+      return "yellow.100";
+    case TaskStatus.DONE:
+      return "green.100";
+    case TaskStatus.CANCEL:
+      return "gray.300";
+    default:
+      return "white";
+  }
 }

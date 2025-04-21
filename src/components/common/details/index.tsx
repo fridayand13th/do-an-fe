@@ -8,9 +8,9 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import styles from '@styles/components/details.module.scss';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+} from "react";
+import styles from "@styles/components/details.module.scss";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 type TDetailsContext = {
   isOpen?: boolean;
@@ -21,7 +21,7 @@ const DetailsContext = createContext<TDetailsContext>({});
 const useDetailsContext = () => {
   const context = useContext(DetailsContext);
   if (!context)
-    throw new Error('useDetailsContext must be used within a <Details />');
+    throw new Error("useDetailsContext must be used within a <Details />");
   return context;
 };
 
@@ -30,7 +30,7 @@ function DetailsProvider({
   className,
 }: {
   children: React.ReactNode;
-  className?: HTMLAttributes<HTMLDivElement>['className'];
+  className?: HTMLAttributes<HTMLDivElement>["className"];
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const value = useMemo(
@@ -56,7 +56,7 @@ function Summary({
   arrowComponent,
 }: {
   children: React.ReactNode;
-  className?: HTMLAttributes<HTMLDivElement>['className'];
+  className?: HTMLAttributes<HTMLDivElement>["className"];
   isArrow?: boolean;
   arrowComponent?: React.ReactNode;
 }) {
@@ -81,13 +81,9 @@ function Arrow() {
   return (
     <div className={styles.arrowWrapper}>
       <MdKeyboardArrowDown
-        className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
+        className={`${styles.arrow} ${isOpen ? styles.open : ""}`}
       />
     </div>
-    // <div
-    //   className={`${styles.arrow} ${isOpen ? styles.open : ''}`}
-    //   onClick={() => setIsOpen && setIsOpen((prev) => !prev)}
-    // ></div>
   );
 }
 
@@ -132,7 +128,7 @@ function Content({
   return (
     <div className="detail-content-wrapper">
       <div
-        className={`detail-content${isOpen ? ' open' : ''}`}
+        className={`detail-content${isOpen ? " open" : ""}`}
         ref={contentRef}
         style={{ height: `${contentHeight}px` }}
       >

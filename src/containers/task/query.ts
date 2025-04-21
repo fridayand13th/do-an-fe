@@ -6,15 +6,6 @@ import { AxiosResponse } from "axios";
 import { ITask, ITaskInfo, IUpdateTask } from "@@types/containers/request";
 import { DEFAULT_CURRENT_PAGE, DEFAULT_PER_PAGE } from "@constants/paginate";
 
-interface IImageRequest {
-  id: string;
-  imageUrl: string;
-  title: string;
-  createdAt: string;
-  tags: string[];
-  description: string;
-}
-
 export type TPaginate<T> = {
   currentPage: number;
   totalPage: number;
@@ -79,3 +70,29 @@ export const deleteTask = () => {
     },
   });
 };
+
+export const searchTask = ({
+  name,
+  status,
+  startDate,
+  endDate,
+  page = DEFAULT_CURRENT_PAGE,
+  take = 10,
+}: {
+  name?: string;
+  status?: string;
+  startDate: string;
+  endDate: string;
+  page?: number;
+  take?: number;
+}) =>
+  useQuery<TPaginate<ITaskInfo>>(queryKeys.listTask.search, () =>
+    apis.requests.SEARCH_TASKS({
+      name,
+      status,
+      startDate,
+      endDate,
+      page,
+      take,
+    }),
+  );

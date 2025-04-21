@@ -1,5 +1,11 @@
 import { IAccount } from "@@types/containers/account";
-import { ITask, IUpdateTask } from "@@types/containers/request";
+import {
+  IPrompt,
+  IPromptResponse,
+  ITask,
+  ITaskInfo,
+  IUpdateTask,
+} from "@@types/containers/request";
 import { TPaginate, TResponseType } from "@@types/forms/common-type";
 import axiosInstance from "@apis/instance";
 import { invalidateGetResponse } from "@utils/common";
@@ -77,6 +83,18 @@ const UPDATE_TASK_DETAIL = (
   return axiosInstance.put(`/tasks/${taskId}`, data);
 };
 
+const CRUD_TASK_BY_GEMINI = (
+  data: IPrompt,
+): Promise<AxiosResponse<TResponseType<IPromptResponse>>> => {
+  return axiosInstance.post("/tasks/gemini-interact", data);
+};
+
+const SEARCH_TASKS = (query: Record<string, any>) =>
+  invalidateGetResponse<TPaginate<ITaskInfo>>({
+    url: `/tasks/search`,
+    params: query,
+  });
+
 export default {
   GET_LIST_TASK,
   GET_TASK_DETAIL,
@@ -89,4 +107,6 @@ export default {
   RESET_PASSWORD,
   UPDATE_TASK_DETAIL,
   DELETE_TASK,
+  CRUD_TASK_BY_GEMINI,
+  SEARCH_TASKS,
 };

@@ -1,5 +1,5 @@
 import { TMenu } from "@@types/constants/menu";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineSearch } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 
 const BEE_EYE_MENU: TMenu[] = [
@@ -8,7 +8,7 @@ const BEE_EYE_MENU: TMenu[] = [
     showCategory: false,
     items: [
       {
-        icon: AiOutlineHome, // Updated icon
+        icon: AiOutlineHome,
         menuName: "HOME",
         defaultPath: "/dashboard",
         subMenu: [],
@@ -20,7 +20,7 @@ const BEE_EYE_MENU: TMenu[] = [
     showCategory: false,
     items: [
       {
-        icon: CgProfile, // Updated icon
+        icon: CgProfile,
         menuName: "Tài khoản",
         defaultPath: "/my-account",
         subMenu: [
@@ -33,6 +33,18 @@ const BEE_EYE_MENU: TMenu[] = [
             subtitle: "Đổi mật khẩu",
           },
         ],
+      },
+    ],
+  },
+  {
+    category: "search",
+    showCategory: false,
+    items: [
+      {
+        icon: AiOutlineSearch,
+        menuName: "Tìm kiếm",
+        defaultPath: "/search",
+        subMenu: [],
       },
     ],
   },

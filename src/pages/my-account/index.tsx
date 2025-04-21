@@ -187,7 +187,7 @@ export default function UserProfileEdit() {
                 <FormControl id="hobby" isInvalid={!!errors.hobby}>
                   <FormLabel display="flex" alignItems="center">
                     <Icon as={MdOutlineFavorite} mr={2} />
-                    Sở thích
+                    Thời gian yêu thích trong ngày
                   </FormLabel>
                   <InputGroup>
                     <Select {...register("hobby", { required: true })}>

@@ -99,16 +99,10 @@ export default function ListGrid<
           className={`${styles.gridHeader}`}
         >
           {gridAreaHeaders.map((area) => {
-            // let _itemStyles = {};
-            // if (itemStyles) {
-            //   _itemStyles = itemStyles[area] || {};
-            //   console.log(_itemStyles);
-            // }
             return (
               <GridItem
                 key={`${area}`}
                 area={`${area}`}
-                // {..._itemStyles}
                 {...itemGridItemProps}
                 className={`${styles.gridItem}`}
               >

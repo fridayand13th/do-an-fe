@@ -6,6 +6,7 @@ const queryKeys = {
     create: ["create"],
     update: ["update"],
     delete: ["delete"],
+    search: ["search"],
   },
 };
 

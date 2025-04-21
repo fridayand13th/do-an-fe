@@ -1,5 +1,5 @@
-import List from '@containers/commons/list';
-import ListGrid from '@components/common/lists/grid';
+import List from "@containers/commons/list";
+import ListGrid from "@components/common/lists/grid";
 import React, {
   createContext,
   Dispatch,
@@ -8,8 +8,8 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from 'react';
-import { TGridListProps, TListProps } from '@@types/containers/list';
+} from "react";
+import { TGridListProps, TListProps } from "@@types/containers/list";
 import {
   Box,
   Button,
@@ -24,23 +24,23 @@ import {
   MenuList,
   Select,
   Text,
-} from '@chakra-ui/react';
-import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx';
-import { getPageNumbers } from '@utils/common';
+} from "@chakra-ui/react";
+import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
+import { getPageNumbers } from "@utils/common";
 import {
   FetchNextPageOptions,
   InfiniteQueryObserverResult,
-} from '@tanstack/react-query';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import styles from '@styles/components/page-list.module.scss';
-import { useRouter } from 'next/router';
-import MenuInput from '@components/common/menu-input';
-import { AiFillCaretDown } from 'react-icons/ai';
-import { debounce } from 'lodash';
-import { FaSearch } from 'react-icons/fa';
-import { useForm } from 'react-hook-form';
-import { TItemListProps } from '@@types/components/commons/item-list';
-import ItemList from '@components/common/lists/item-list';
+} from "@tanstack/react-query";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import styles from "@styles/components/page-list.module.scss";
+import { useRouter } from "next/router";
+import MenuInput from "@components/common/menu-input";
+import { AiFillCaretDown } from "react-icons/ai";
+import { debounce } from "lodash";
+import { FaSearch } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { TItemListProps } from "@@types/components/commons/item-list";
+import ItemList from "@components/common/lists/item-list";
 
 type TPageListContext = {
   currentPage: number;
@@ -70,7 +70,7 @@ const PageListContext = createContext<TPageListContext>({
     return new Promise(() => {});
   },
   take: 6,
-  pageTakeLocalStorageKey: 'pageTakeCount',
+  pageTakeLocalStorageKey: "pageTakeCount",
   setTake: () => {},
   items: [],
 });
@@ -78,17 +78,17 @@ const PageListContext = createContext<TPageListContext>({
 export const usePageListContext = () => {
   const context = useContext(PageListContext);
   if (!context)
-    throw new Error('usePageListContext must be used within a <Page />');
+    throw new Error("usePageListContext must be used within a <Page />");
   return context;
 };
 
 function PageListProvider({
   children,
-  pageTakeLocalStorageKey = 'pageTakeCount',
+  pageTakeLocalStorageKey = "pageTakeCount",
   ...props
 }: TPageListProviderProps) {
   const [take, setTake] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       let _take = window.localStorage.getItem(pageTakeLocalStorageKey);
 
       if (!_take) _take = process.env.NEXT_PUBLIC_PAGE_DEFAULT_TAKE!;
@@ -110,17 +110,17 @@ function PageListProvider({
 }
 
 function PageList<
-  ItemType extends { id: ItemType['id'] } & Record<string, any>,
+  ItemType extends { id: ItemType["id"] } & Record<string, any>,
   ItemHeaders extends string,
->({ ...props }: Omit<TListProps<ItemType, ItemHeaders>, 'items'>) {
+>({ ...props }: Omit<TListProps<ItemType, ItemHeaders>, "items">) {
   const { items } = usePageListContext();
   return <List items={items} {...props} />;
 }
 
 function PageListGrid<
-  T extends { id: T['id'] } & Record<string, any>,
+  T extends { id: T["id"] } & Record<string, any>,
   K extends string,
->({ ...props }: Omit<TGridListProps<T, K>, 'items'>) {
+>({ ...props }: Omit<TGridListProps<T, K>, "items">) {
   const { items } = usePageListContext();
   return <ListGrid items={items} {...props} />;
 }
@@ -128,7 +128,7 @@ function PageListGrid<
 function PageItemList<T extends { id: string | number } & Record<string, any>>({
   renderer,
   ...props
-}: Omit<TItemListProps<T>, 'items'>) {
+}: Omit<TItemListProps<T>, "items">) {
   const { items } = usePageListContext();
   return <ItemList items={items} renderer={renderer} {...props} />;
 }
@@ -200,7 +200,7 @@ function Pagination() {
             <li
               key={num}
               className={`${styles.paginationNumber}${
-                currentPage === num ? ' ' + styles.select : ''
+                currentPage === num ? " " + styles.select : ""
               }`}
               onClick={() => handlePageChange(num)}
             >
@@ -242,7 +242,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
     eventOrNumber: React.ChangeEvent<HTMLInputElement> | number,
   ) => {
     const value =
-      typeof eventOrNumber === 'number'
+      typeof eventOrNumber === "number"
         ? eventOrNumber
         : eventOrNumber.target.value;
     if (take === value || !take) return;
@@ -253,7 +253,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
       ? { page: currentPage, take: value }
       : { take: value };
     setTake(+value);
-    localStorage.setItem(pageTakeLocalStorageKey, '' + value);
+    localStorage.setItem(pageTakeLocalStorageKey, "" + value);
 
     fetchNextPage({
       pageParam: pageParamObject,
@@ -274,7 +274,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
     <div>
       <Menu>
         <MenuButton className={styles.paginationTakeButton}>
-          {take && <>{take}개씩 보기</>}
+          {take && <>Hiển thị {take} mục mỗi trang</>}
           <span className={styles.paginationTakeButtonIcon}>
             <AiFillCaretDown />
           </span>
@@ -285,7 +285,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
               className={styles.paginationTakeItem}
               onClick={() => handleTakeChange(15)}
             >
-              15개씩 보기
+              Hiển thị 15 mục mỗi trang
             </MenuItem>
           )}
           {max > 30 && (
@@ -293,7 +293,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
               className={styles.paginationTakeItem}
               onClick={() => handleTakeChange(30)}
             >
-              30개씩 보기
+              Hiển thị 30 mục mỗi trang
             </MenuItem>
           )}
           {max > 60 && (
@@ -301,7 +301,7 @@ const Take = ({ max = 60 }: { max?: number }) => {
               className={styles.paginationTakeItem}
               onClick={() => handleTakeChange(60)}
             >
-              60개씩 보기
+              Hiển thị 60 mục mỗi trang
             </MenuItem>
           )}
           <MenuDivider />
@@ -320,9 +320,9 @@ function Search({
   const { take, fetchNextPage } = usePageListContext();
   const router = useRouter();
   const { register, getValues } = useForm({
-    mode: 'onSubmit',
+    mode: "onSubmit",
     defaultValues: {
-      search: '',
+      search: "",
     },
   });
   const handleSearchSubmit = async () => {
@@ -337,7 +337,7 @@ function Search({
       {
         pathname: router.pathname,
         query:
-          !search || search === ''
+          !search || search === ""
             ? { ...router.query }
             : { ...router.query, search },
       },
@@ -354,11 +354,11 @@ function Search({
               <Select
                 width="6rem"
                 border="none"
-                {...register('search')}
+                {...register("search")}
                 _focus={{
-                  outline: 'none',
-                  borderColor: 'none',
-                  boxShadow: 'none',
+                  outline: "none",
+                  borderColor: "none",
+                  boxShadow: "none",
                 }}
               >
                 {searchField.map((field) => (
@@ -376,7 +376,7 @@ function Search({
           <Input
             type="text"
             boxSizing="border-box"
-            {...register('search')}
+            {...register("search")}
             borderLeftRadius="0"
             maxWidth="13rem"
           />
@@ -387,7 +387,7 @@ function Search({
               background="transparent"
               border="none"
               cursor="pointer"
-              _hover={{ background: 'none' }}
+              _hover={{ background: "none" }}
               onClick={() => {
                 handleSearchSubmit();
               }}

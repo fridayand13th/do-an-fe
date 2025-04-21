@@ -18,3 +18,11 @@ export interface IUpdateTask {
   endDate: string | null;
   status: string | null; // "pending" | "completed" | etc.
 }
+
+export interface IPrompt {
+  prompt: string;
+}
+
+export interface IPromptResponse {
+  data: string;
+}

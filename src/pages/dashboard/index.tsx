@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
-import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -11,20 +10,21 @@ import {
   Stack,
   Text,
   Spinner,
-  useColorModeValue,
   Icon,
   Flex,
-  HStack,
-  VStack,
+  useColorModeValue,
   Tooltip,
 } from "@chakra-ui/react";
 import { MdAdd, MdArrowBack, MdArrowForward } from "react-icons/md";
 
 import useMobile from "@hooks/useMobile";
 import { getListTask } from "@containers/task/query";
-import { ITaskInfo } from "@@types/containers/request";
+import { ITask, ITaskInfo } from "@@types/containers/request";
 import usePopup from "@hooks/usePopup";
 import TaskPopup from "@containers/task/popup";
+import ChatWidget from "@components/chat-box";
+import { useRouter } from "next/router";
+import { getStatusBackgroundColor } from "@utils/common";
 
 export enum TaskStatus {
   OPEN = "Chưa xử lý",
@@ -33,29 +33,14 @@ export enum TaskStatus {
   CANCEL = "Hủy",
 }
 
-const getStatusBackgroundColor = (status: TaskStatus) => {
-  switch (status) {
-    case TaskStatus.OPEN:
-      return "red.100";
-    case TaskStatus.IN_PROGRESS:
-      return "yellow.100";
-    case TaskStatus.DONE:
-      return "green.100";
-    case TaskStatus.CANCEL:
-      return "gray.300";
-    default:
-      return "white";
-  }
-};
-
 function ListTasks() {
   const router = useRouter();
   const { query } = router;
   const isMobile = useMobile();
   const { openPopup, closePopup } = usePopup();
-
   const currentPage = Number(query.page) || 1;
   const take = Number(query.take) || 30;
+  const bgColor = useColorModeValue("gray.50", "gray.700");
 
   const [loading, setLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(() => {
@@ -95,50 +80,39 @@ function ListTasks() {
     return debouncedRefetch.cancel;
   }, [startDate, endDate, debouncedRefetch]);
 
-  const incrementMonth = () => {
-    setCurrentDate((prev) => {
-      const next = new Date(prev);
-      next.setUTCMonth(next.getUTCMonth() + 1);
-      return next;
-    });
-  };
-
-  const decrementMonth = () => {
-    setCurrentDate((prev) => {
-      const next = new Date(prev);
-      next.setUTCMonth(next.getUTCMonth() - 1);
-      return next;
-    });
-  };
-
   const taskMap = useMemo(() => {
     const map = new Map<number, ITaskInfo[]>();
-    currentData?.items?.forEach((item) => {
-      map.set(item.toDoDay, item.tasks);
+    currentData?.items?.forEach((task: any) => {
+      const day = task.toDoDay; // Giả sử toDoDay là số ngày trong tháng (19, 20,...)
+      if (!map.has(day)) {
+        map.set(day, []);
+      }
+      map.set(task.toDoDay, task.tasks);
     });
     return map;
   }, [currentData]);
 
   const daysInMonth = useMemo(() => {
     const days: number[] = [];
-    const totalDays = new Date(year, month + 1, 0).getUTCDate();
-    for (let i = 0; i <= totalDays; i++) {
-      days.push(i + 1);
+    const totalDays = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+    for (let i = 1; i <= totalDays; i++) {
+      days.push(i);
     }
     return days;
   }, [year, month]);
 
-  const bgColor = useColorModeValue("gray.50", "gray.700");
+  const firstDayOfMonth = new Date(Date.UTC(year, month, 1)).getUTCDay();
+
   const today = new Date().getUTCDate();
   const isTodayMonth =
     new Date().getUTCMonth() === month && new Date().getUTCFullYear() === year;
 
-  const handleRowClick = (data: ITaskInfo) => {
+  const handleRowClick = (task: ITaskInfo) => {
     openPopup({
       isOpen: true,
       Component: TaskPopup,
       props: {
-        taskId: data.id,
+        taskId: task.id,
         onClose: () => {
           closePopup();
           setTimeout(() => refetch(), 200);
@@ -152,7 +126,7 @@ function ListTasks() {
     });
   };
 
-  const handleBoxClick = () => {
+  const handleAddTask = () => {
     openPopup({
       isOpen: true,
       Component: TaskPopup,
@@ -171,102 +145,131 @@ function ListTasks() {
     });
   };
 
+  const incrementMonth = () => {
+    setCurrentDate((prev) => {
+      const next = new Date(prev);
+      next.setUTCMonth(next.getUTCMonth() + 1);
+      return next;
+    });
+  };
+
+  const decrementMonth = () => {
+    setCurrentDate((prev) => {
+      const next = new Date(prev);
+      next.setUTCMonth(next.getUTCMonth() - 1);
+      return next;
+    });
+  };
+
   return (
-    <Box w="full" p={6} bg="white" borderRadius="xl" boxShadow="lg">
-      <Flex
-        direction={isMobile ? "column" : "row"}
-        justify="space-between"
-        align="center"
-        mb={6}
-        gap={4}
-      >
-        <Button onClick={decrementMonth} variant="ghost" size="sm">
-          <Icon as={MdArrowBack} boxSize={5} />
-        </Button>
+    <>
+      <Box w="full" p={6} bg="white" borderRadius="xl" boxShadow="lg">
+        <Flex justify="space-between" align="center" mb={6}>
+          <Button onClick={decrementMonth} variant="ghost" size="sm">
+            <Icon as={MdArrowBack} boxSize={5} />
+          </Button>
 
-        <Text fontWeight="bold" fontSize="2xl">
-          {year} / {month + 1}
-        </Text>
-
-        <Button onClick={incrementMonth} variant="ghost" size="sm">
-          <Icon as={MdArrowForward} boxSize={5} />
-        </Button>
-      </Flex>
-
-      <Grid templateColumns="repeat(7, 1fr)" gap={4} mb={2}>
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-          <Text
-            key={day}
-            textAlign="center"
-            fontWeight="semibold"
-            fontSize="md"
-            opacity={0.8}
-          >
-            {day}
+          <Text fontWeight="bold" fontSize="2xl">
+            {year} / {month + 1}
           </Text>
-        ))}
-      </Grid>
 
-      {loading ? (
-        <Flex justify="center" align="center" minH="200px">
-          <Spinner size="lg" />
+          <Button onClick={incrementMonth} variant="ghost" size="sm">
+            <Icon as={MdArrowForward} boxSize={5} />
+          </Button>
         </Flex>
-      ) : (
-        <Grid templateColumns="repeat(7, 1fr)" gap={4}>
-          {daysInMonth.map((day) => (
-            <GridItem
-              key={day}
-              p={2}
-              borderRadius="lg"
-              border="1px solid"
-              borderColor="gray.200"
-              minH="140px"
-              bg={bgColor}
-              boxShadow={
-                isTodayMonth && day === today ? "0 0 0 2px #3182ce" : "sm"
-              }
-              transition="all 0.2s ease-in-out"
-              _hover={{ boxShadow: "md" }}
-            >
-              <Flex justify="space-between" align="center" mb={2}>
-                <Text fontWeight="bold">{day}</Text>
-                <Tooltip label="" hasArrow>
-                  <Icon
-                    title="Add Task"
-                    as={MdAdd}
-                    boxSize={5}
-                    color="blue.500"
-                    cursor="pointer"
-                    onClick={handleBoxClick}
-                  />
-                </Tooltip>
-              </Flex>
 
-              <Stack spacing={1}>
-                {taskMap.get(day)?.map((task) => (
-                  <Box
-                    key={task.id}
-                    p={2}
-                    bg={getStatusBackgroundColor(task.status as TaskStatus)}
-                    borderRadius="md"
-                    fontSize="sm"
-                    whiteSpace="nowrap"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                    title={task.name}
-                    cursor="pointer"
-                    _hover={{ bg: "blue.100" }}
-                    onClick={() => handleRowClick(task)}
-                  >
-                    {task.name}
-                  </Box>
-                ))}
-              </Stack>
-            </GridItem>
+        <Grid templateColumns="repeat(7, 1fr)" gap={4} mb={2}>
+          {[
+            "Chủ Nhật",
+            "Thứ Hai",
+            "Thứ Ba",
+            "Thứ Tư",
+            "Thứ Năm",
+            "Thứ Sáu",
+            "Thứ Bảy",
+          ].map((day) => (
+            <Text
+              key={day}
+              textAlign="center"
+              fontWeight="semibold"
+              fontSize="md"
+              opacity={0.8}
+            >
+              {day}
+            </Text>
           ))}
         </Grid>
-      )}
-    </Box>
+
+        {loading ? (
+          <Flex justify="center" align="center" minH="200px">
+            <Spinner size="lg" />
+          </Flex>
+        ) : (
+          <Grid templateColumns="repeat(7, 1fr)" gap={4}>
+            {/* Empty slots for first week padding */}
+            {Array.from({ length: firstDayOfMonth }).map((_, i) => (
+              <Box key={`empty-${i}`} />
+            ))}
+
+            {/* Actual days */}
+            {daysInMonth.map((day) => (
+              <GridItem
+                key={day}
+                p={2}
+                borderRadius="lg"
+                border="1px solid"
+                borderColor="gray.200"
+                minH="140px"
+                bg={bgColor}
+                boxShadow={
+                  isTodayMonth && day === today ? "0 0 0 2px #3182ce" : "sm"
+                }
+                transition="all 0.2s ease-in-out"
+                _hover={{ boxShadow: "md" }}
+              >
+                <Flex justify="space-between" align="center" mb={2}>
+                  <Text fontWeight="bold">{day}</Text>
+                  <Tooltip hasArrow>
+                    <Icon
+                      title="Add Task"
+                      as={MdAdd}
+                      boxSize={5}
+                      color="blue.500"
+                      cursor="pointer"
+                      onClick={handleAddTask}
+                      ref={null}
+                    />
+                  </Tooltip>
+                </Flex>
+
+                <Stack spacing={1}>
+                  {taskMap.get(day)?.map((task) => (
+                    <Box
+                      key={task.id}
+                      p={2}
+                      bg={getStatusBackgroundColor(task.status as TaskStatus)}
+                      borderRadius="md"
+                      fontSize="sm"
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      title={task.name}
+                      cursor="pointer"
+                      _hover={{ bg: "blue.100" }}
+                      onClick={() => handleRowClick(task)}
+                    >
+                      {task.name}
+                    </Box>
+                  ))}
+                </Stack>
+              </GridItem>
+            ))}
+          </Grid>
+        )}
+      </Box>
+
+      <ChatWidget onTaskCreated={() => refetch()} />
+    </>
   );
 }
 
