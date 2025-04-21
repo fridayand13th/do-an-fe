@@ -1,4 +1,4 @@
-# beeeye-fe
+# friday-fe
 
 This project was generated with [superplate](https://github.com/pankod/superplate).
 
