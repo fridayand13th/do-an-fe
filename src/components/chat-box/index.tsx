@@ -78,39 +78,30 @@ const ChatWidget = ({ onTaskCreated }: ChatWidgetProps) => {
       const { task: response, method, message } = data.data.data;
       let responseText = "";
 
+      const timeFormatter = new Intl.DateTimeFormat("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+
+      const dateFormatter = new Intl.DateTimeFormat("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
       if (message) {
         responseText = message;
       }
 
       if (response) {
-        const start = new Date(response.startDate);
-        const end = new Date(response.endDate);
-
-        const timeFormatter = new Intl.DateTimeFormat("vi-VN", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        });
-
-        const dateFormatter = new Intl.DateTimeFormat("vi-VN", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-
-        const timeRange = `${timeFormatter.format(
-          start,
-        )} - ${timeFormatter.format(end)}`;
-        const formattedDate = dateFormatter.format(start);
-
-        const taskData: IUpdateTask = {
-          name: response.name,
-          startDate: response.startDate,
-          endDate: response.endDate,
-          status: response.status,
-        };
-
         if (method === TaskAction.SUGGEST) {
+          const taskData: IUpdateTask = {
+            name: response.name,
+            startDate: response.startDate,
+            endDate: response.endDate,
+            status: response.status,
+          };
           setIsSuggestion(true);
           setMessages((prev) => [
             ...prev,
@@ -124,19 +115,40 @@ const ChatWidget = ({ onTaskCreated }: ChatWidgetProps) => {
           return;
         }
 
-        switch (method) {
-          case TaskAction.CREATE:
-            responseText = `✅ Đã tạo công việc: \n${response.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
-            onTaskCreated?.();
-            break;
-          case TaskAction.UPDATE:
-            responseText = `✅ Đã cập nhật công việc: \n${response.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
-            break;
-          case TaskAction.FIND:
-            responseText = `✅ Tìm thấy công việc: \n${response.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
-            break;
-          default:
-            responseText = message;
+        if (Array.isArray(response)) {
+          if (method === TaskAction.FIND) {
+            responseText = response
+              .map((task) => {
+                const start = new Date(task.startDate!);
+                const end = new Date(task.endDate!);
+                const timeRange = `${timeFormatter.format(
+                  start,
+                )} - ${timeFormatter.format(end)}`;
+                const formattedDate = dateFormatter.format(start);
+                return `🔹 ${task.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
+              })
+              .join("\n\n");
+            responseText = `✅ Tìm thấy ${response.length} công việc:\n\n${responseText}`;
+          }
+        } else {
+          const start = new Date(response.startDate!);
+          const end = new Date(response.endDate!);
+          const timeRange = `${timeFormatter.format(
+            start,
+          )} - ${timeFormatter.format(end)}`;
+          const formattedDate = dateFormatter.format(start);
+
+          switch (method) {
+            case TaskAction.CREATE:
+              responseText = `✅ Đã tạo công việc: \n${response.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
+              onTaskCreated?.();
+              break;
+            case TaskAction.UPDATE:
+              responseText = `✅ Đã cập nhật công việc: \n${response.name}\n🕒 ${timeRange} ngày ${formattedDate}`;
+              break;
+            default:
+              responseText = message;
+          }
         }
       }
 

@@ -5,8 +5,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Grid,
-  GridItem,
   HStack,
   Input,
   Modal,
@@ -18,7 +16,6 @@ import {
   Select,
   Stack,
   Text,
-  VStack,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -35,8 +32,7 @@ import { getErrorMessage } from "@utils/common";
 import { useEffect } from "react";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
-
-import "antd/dist/reset.css"; // if using v5+
+import "antd/dist/reset.css";
 
 function TaskPopup({
   props: { taskId, onClose },
@@ -49,13 +45,11 @@ function TaskPopup({
   const toast = useToast();
   const { data: taskDetailRes } = getTaskDetail(taskId ? String(taskId) : "");
   const { mutate: useDeleteTask, isLoading } = deleteTask();
-
   const { mutateAsync: createTaskMutation } = useCreateTask();
-
-  const taskData = taskDetailRes?.data?.data;
-
   const { mutateAsync: editTask, isLoading: isLoadingEdit } =
     updateTaskDetail();
+
+  const taskData = taskDetailRes?.data?.data;
 
   const {
     register,
@@ -162,6 +156,132 @@ function TaskPopup({
     }
   };
 
+  const renderForm = (onSubmitHandler: (values: any) => void) => (
+    <Flex align="center" justify="center">
+      <Stack
+        spacing={8}
+        w="full"
+        maxW="5xl"
+        bg={useColorModeValue("white", "gray.700")}
+        rounded="xl"
+        boxShadow="lg"
+        p={8}
+      >
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
+          <Stack spacing={4}>
+            <HStack spacing={4} alignItems="start">
+              <FormControl isInvalid={!!errors.name}>
+                <FormLabel>Tên công việc</FormLabel>
+                <Input placeholder="Nhập tên công việc" {...register("name")} />
+                <Box minH="30px">
+                  <FormErrorMessage className="mt-0">
+                    {errors.name?.message}
+                  </FormErrorMessage>
+                </Box>
+              </FormControl>
+
+              <FormControl isInvalid={!!errors.status}>
+                <FormLabel>Trạng thái</FormLabel>
+                <Select {...register("status")}>
+                  <option value="Chưa xử lý">Chưa xử lý</option>
+                  <option value="Đang xử lý">Đang xử lý</option>
+                  <option value="Đã xử lý">Đã xử lý</option>
+                  <option value="Hủy">Hủy</option>
+                </Select>
+                <Box minH="30px">
+                  <FormErrorMessage className="mt-0">
+                    {errors.status?.message}
+                  </FormErrorMessage>
+                </Box>
+              </FormControl>
+            </HStack>
+
+            <HStack spacing={4}>
+              <FormControl isInvalid={!!errors.startDate}>
+                <FormLabel>Ngày bắt đầu</FormLabel>
+                <Controller
+                  name="startDate"
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      showTime
+                      format="YYYY-MM-DD HH:mm"
+                      style={{ width: "100%" }}
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(val) =>
+                        field.onChange(
+                          val ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss") : "",
+                        )
+                      }
+                    />
+                  )}
+                />
+                <Box minH="30px">
+                  <FormErrorMessage className="mt-0">
+                    {errors.startDate?.message}
+                  </FormErrorMessage>
+                </Box>
+              </FormControl>
+
+              <FormControl isInvalid={!!errors.endDate}>
+                <FormLabel>Ngày kết thúc</FormLabel>
+                <Controller
+                  name="endDate"
+                  control={control}
+                  render={({ field }) => (
+                    <DatePicker
+                      showTime
+                      format="YYYY-MM-DD HH:mm"
+                      style={{ width: "100%" }}
+                      value={field.value ? dayjs(field.value) : null}
+                      onChange={(val) =>
+                        field.onChange(
+                          val ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss") : "",
+                        )
+                      }
+                    />
+                  )}
+                />
+                <Box minH="30px">
+                  <FormErrorMessage className="mt-0">
+                    {errors.endDate?.message}
+                  </FormErrorMessage>
+                </Box>
+              </FormControl>
+            </HStack>
+          </Stack>
+
+          <Stack spacing={6} direction="row" pt={6}>
+            <Button w="full" onClick={onClose}>
+              Hủy bỏ
+            </Button>
+            <Button
+              colorScheme="blue"
+              w="full"
+              type="submit"
+              isLoading={isLoadingEdit}
+              isDisabled={!isDirty}
+            >
+              Lưu
+            </Button>
+            {taskId && (
+              <Button
+                colorScheme="red"
+                w="full"
+                type="button"
+                isLoading={isLoadingEdit}
+                isDisabled={isDirty}
+                onClick={handleDelete}
+              >
+                Xóa
+              </Button>
+            )}
+          </Stack>
+        </form>
+      </Stack>
+    </Flex>
+  );
+
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
@@ -175,239 +295,7 @@ function TaskPopup({
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {taskId ? (
-            <Flex align="center" justify="center">
-              <Stack
-                spacing={8}
-                w="full"
-                maxW="5xl"
-                bg={useColorModeValue("white", "gray.700")}
-                rounded="xl"
-                boxShadow="lg"
-                p={8}
-              >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Stack spacing={4}>
-                    <HStack spacing={4} alignItems="start">
-                      <FormControl isInvalid={!!errors.name}>
-                        <FormLabel>Tên công việc</FormLabel>
-                        <Input
-                          placeholder="Nhập tên công việc"
-                          {...register("name")}
-                        />
-                        <FormErrorMessage>
-                          {errors.name?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-
-                      <FormControl isInvalid={!!errors.status}>
-                        <FormLabel>Trạng thái</FormLabel>
-                        <Select {...register("status")}>
-                          <option value="Chưa xử lý">Chưa xử lý</option>
-                          <option value="Đang xử lý">Đang xử lý</option>
-                          <option value="Đã xử lý">Đã xử lý</option>
-                          <option value="Hủy">Hủy</option>
-                        </Select>
-                        <FormErrorMessage>
-                          {errors.status?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-                    </HStack>
-
-                    <HStack spacing={4}>
-                      <FormControl isInvalid={!!errors.startDate}>
-                        <FormLabel>Ngày bắt đầu</FormLabel>
-                        <Controller
-                          name="startDate"
-                          control={control}
-                          render={({ field }) => (
-                            <DatePicker
-                              showTime
-                              format="YYYY-MM-DD HH:mm"
-                              style={{ width: "100%" }}
-                              value={field.value ? dayjs(field.value) : null}
-                              onChange={(val) =>
-                                field.onChange(
-                                  val
-                                    ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss")
-                                    : "",
-                                )
-                              }
-                            />
-                          )}
-                        />
-                        <FormErrorMessage>
-                          {errors.startDate?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-
-                      <FormControl isInvalid={!!errors.endDate}>
-                        <FormLabel>Ngày kết thúc</FormLabel>
-                        <Controller
-                          name="endDate"
-                          control={control}
-                          render={({ field }) => (
-                            <DatePicker
-                              showTime
-                              format="YYYY-MM-DD HH:mm"
-                              style={{ width: "100%" }}
-                              value={field.value ? dayjs(field.value) : null}
-                              onChange={(val) =>
-                                field.onChange(
-                                  val
-                                    ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss")
-                                    : "",
-                                )
-                              }
-                            />
-                          )}
-                        />
-                        <FormErrorMessage>
-                          {errors.endDate?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-                    </HStack>
-                  </Stack>
-
-                  <Stack spacing={6} direction="row" pt={6}>
-                    <Button w="full" onClick={onClose}>
-                      Hủy bỏ
-                    </Button>
-                    <Button
-                      colorScheme="blue"
-                      w="full"
-                      type="submit"
-                      isLoading={isLoadingEdit}
-                      isDisabled={!isDirty}
-                    >
-                      Lưu
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      w="full"
-                      type="button"
-                      isLoading={isLoadingEdit}
-                      isDisabled={isDirty}
-                      onClick={() => handleDelete()}
-                    >
-                      Xóa
-                    </Button>
-                  </Stack>
-                </form>
-              </Stack>
-            </Flex>
-          ) : (
-            <Flex align="center" justify="center">
-              <Stack
-                spacing={8}
-                w="full"
-                maxW="5xl"
-                bg={useColorModeValue("white", "gray.700")}
-                rounded="xl"
-                boxShadow="lg"
-                p={8}
-              >
-                <form onSubmit={handleSubmit(onCreate)}>
-                  <Stack spacing={4}>
-                    <HStack spacing={4} alignItems="start">
-                      <FormControl isInvalid={!!errors.name}>
-                        <FormLabel>Tên công việc</FormLabel>
-                        <Input
-                          placeholder="Nhập tên công việc"
-                          {...register("name")}
-                        />
-                        <FormErrorMessage>
-                          {errors.name?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-
-                      <FormControl isInvalid={!!errors.status}>
-                        <FormLabel>Trạng thái</FormLabel>
-                        <Select {...register("status")}>
-                          <option value="Chưa xử lý">Chưa xử lý</option>
-                          <option value="Đang xử lý">Đang xử lý</option>
-                          <option value="Đã xử lý">Đã xử lý</option>
-                          <option value="Hủy">Hủy</option>
-                        </Select>
-                        <FormErrorMessage>
-                          {errors.status?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-                    </HStack>
-
-                    <HStack spacing={4}>
-                      <FormControl isInvalid={!!errors.startDate}>
-                        <FormLabel>Ngày bắt đầu</FormLabel>
-                        <Controller
-                          name="startDate"
-                          control={control}
-                          render={({ field }) => (
-                            <DatePicker
-                              showTime
-                              format="YYYY-MM-DD HH:mm"
-                              style={{ width: "100%" }}
-                              value={field.value ? dayjs(field.value) : null}
-                              onChange={(val) =>
-                                field.onChange(
-                                  val
-                                    ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss")
-                                    : "",
-                                )
-                              }
-                            />
-                          )}
-                        />
-                        <FormErrorMessage>
-                          {errors.startDate?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-
-                      <FormControl isInvalid={!!errors.endDate}>
-                        <FormLabel>Ngày kết thúc</FormLabel>
-                        <Controller
-                          name="endDate"
-                          control={control}
-                          render={({ field }) => (
-                            <DatePicker
-                              showTime
-                              format="YYYY-MM-DD HH:mm"
-                              style={{ width: "100%" }}
-                              value={field.value ? dayjs(field.value) : null}
-                              onChange={(val) =>
-                                field.onChange(
-                                  val
-                                    ? dayjs(val).format("YYYY-MM-DDTHH:mm:ss")
-                                    : "",
-                                )
-                              }
-                            />
-                          )}
-                        />
-                        <FormErrorMessage>
-                          {errors.endDate?.message}
-                        </FormErrorMessage>
-                      </FormControl>
-                    </HStack>
-                  </Stack>
-
-                  <Stack spacing={6} direction="row" pt={6}>
-                    <Button w="full" onClick={onClose}>
-                      Hủy bỏ
-                    </Button>
-                    <Button
-                      colorScheme="blue"
-                      w="full"
-                      type="submit"
-                      isLoading={isLoadingEdit}
-                      isDisabled={!isDirty}
-                    >
-                      Lưu
-                    </Button>
-                  </Stack>
-                </form>
-              </Stack>
-            </Flex>
-          )}
+          {taskId ? renderForm(onSubmit) : renderForm(onCreate)}
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -258,7 +258,9 @@ function ListTasks() {
                       _hover={{ bg: "blue.100" }}
                       onClick={() => handleRowClick(task)}
                     >
-                      {task.name}
+                      {task.name.length >= 21
+                        ? `${task.name.slice(0, 10)}...`
+                        : task.name}
                     </Box>
                   ))}
                 </Stack>
